@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "MolFuzzy: A Python toolkit for molecular-geometry-based fuzzy multi-criteria decision support"
+version: 1.0.0
+date-released: "2026-08-03"
+license: MIT
+authors:
+  - family-names: "Wang"
+    given-names: "Fengyi"
+    affiliation: "School of Computer, Beijing Technology and Business University"
+repository-code: "https://github.com/wangfengyi2001-cmyk/molfuzzy-"
+preferred-citation:
+  type: article
+  title: "MolFuzzy: A Python toolkit for molecular-geometry-based fuzzy multi-criteria decision support"
+  journal: "SoftwareX"
+  authors:
+    - family-names: "Wang"
+      given-names: "Fengyi"
+      affiliation: "School of Computer, Beijing Technology and Business University"
+  year: 2026

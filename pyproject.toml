@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molfuzzy"
+version = "1.0.0"
+description = "Molecular-geometry-based fuzzy multi-criteria decision support (LOM expert weighting, Q-learning balancing, cognitive-map criteria weighting, ACO ranking)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Fengyi Wang", email = "wangfengyi2001@gmail.com" }
+]
+keywords = [
+    "fuzzy sets",
+    "multi-criteria decision making",
+    "ant colony optimization",
+    "cognitive maps",
+    "Q-learning",
+    "decision support",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.urls]
+Homepage = "https://github.com/wangfengyi2001-cmyk/molfuzzy-"
+Repository = "https://github.com/wangfengyi2001-cmyk/molfuzzy-"
+Issues = "https://github.com/wangfengyi2001-cmyk/molfuzzy-/issues"
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+molfuzzy = "molfuzzy.cli:main"
+
+[tool.setuptools]
+packages = ["molfuzzy"]
