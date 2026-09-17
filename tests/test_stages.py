@@ -47,17 +47,40 @@ def _toy_mfv_matrix(seed_offset=0.0):
     ]
 
 
-def test_balance_experts_moves_toward_benchmark():
+def _mfv_matrix_to_array(matrix):
+    """(n, n, 3) numeric view of a matrix of MFVs."""
+    return np.array([[cell.as_tuple() for cell in row] for row in matrix], dtype=float)
+
+
+def test_balance_experts_leaves_benchmark_untouched():
     matrices = [_toy_mfv_matrix(0.0), _toy_mfv_matrix(0.1), _toy_mfv_matrix(-0.2)]
     result = balance_experts(matrices, weights=[0.4, 0.35, 0.25], benchmark=0, learning_rate=0.3)
     assert set(result.balanced.keys()) == {0, 1, 2}
-    # benchmark expert's matrix is left untouched
     for i in range(3):
         for j in range(3):
             if i != j:
                 orig = matrices[0][i][j].as_tuple()
                 bal = result.balanced[0][i][j].as_tuple()
                 assert orig == pytest.approx(bal)
+
+
+def test_balance_experts_moves_toward_benchmark():
+    """Every non-benchmark expert must end up strictly closer to the benchmark.
+
+    This asserts actual movement, not merely that the benchmark survived
+    (which the previous version of this test only checked).
+    """
+    matrices = [_toy_mfv_matrix(0.0), _toy_mfv_matrix(0.1), _toy_mfv_matrix(-0.2)]
+    result = balance_experts(matrices, weights=[0.4, 0.35, 0.25], benchmark=0, learning_rate=0.3)
+    before = [_mfv_matrix_to_array(m) for m in matrices]
+    after = [_mfv_matrix_to_array(result.balanced[k]) for k in range(3)]
+    for k in (1, 2):
+        d_before = float(np.max(np.abs(before[k] - before[0])))
+        d_after = float(np.max(np.abs(after[k] - after[0])))
+        assert d_after < d_before, (
+            f"expert {k} did not move toward the benchmark "
+            f"(max elementwise gap {d_before:.6f} -> {d_after:.6f})"
+        )
 
 
 def test_cognitive_map_weights_sum_to_one():

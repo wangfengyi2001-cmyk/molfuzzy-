@@ -22,7 +22,11 @@ import numpy as np
 
 from .aco import ACOResult, aco_rank
 from .cognitive_map import CognitiveMapResult, aggregate_matrices, cognitive_map_weights
-from .data import linguistic_matrix_to_mfv_rows, linguistic_matrix_to_numbers
+from .data import (
+    linguistic_matrix_to_mfv_rows,
+    linguistic_matrix_to_numbers,
+    normalized_relation_matrix,
+)
 from .lom import ReliabilityDimensions, compute_reliability_dimensions, lom_expert_weights
 from .mfv import MFV
 from .qlearning import QLearningResult, balance_experts
@@ -109,7 +113,9 @@ class DecisionPipeline:
             linguistic_matrix_to_numbers(self.criterion_labels, m)
             for m in criteria_matrices
         ]
-        norm_matrices = [_row_normalize(m) for m in number_matrices]
+        # Eq. 4 row-normalization; shares the single implementation in
+        # ``molfuzzy.data`` so the two can never drift apart.
+        norm_matrices = [normalized_relation_matrix(m) for m in number_matrices]
         dims = compute_reliability_dimensions(norm_matrices)
         lom = lom_expert_weights(dims, beta=self.beta)
 
@@ -159,14 +165,6 @@ class DecisionPipeline:
 # ---------------------------------------------------------------------------
 # Internal helpers
 # ---------------------------------------------------------------------------
-
-
-def _row_normalize(number_matrix: np.ndarray) -> np.ndarray:
-    row_sums = number_matrix.sum(axis=1, keepdims=True)
-    row_sums = np.where(row_sums == 0, 1.0, row_sums)
-    out = number_matrix / row_sums
-    np.fill_diagonal(out, 0.0)
-    return out
 
 
 def _linguistic_square_to_mfv_matrix(

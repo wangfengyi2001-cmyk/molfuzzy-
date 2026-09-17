@@ -22,8 +22,10 @@ lom_expert_weights        Linear-optimization expert weighting (Eq. 5-8).
 balance_experts           Q-learning based evaluation-matrix balancing.
 cognitive_map_weights     Cognitive-map criteria weighting.
 aco_rank                  Ant-colony-optimization alternative ranking.
-DecisionPipeline          High-level, 5-stage orchestrator (Fig. 1 of the
-                         reference methodology).
+DecisionPipeline          High-level, 4-stage orchestrator (Fig. 1 of the
+                         reference methodology): LOM expert weighting ->
+                         Q-learning balancing -> cognitive-map criterion
+                         weighting -> ACO alternative ranking.
 """
 
 from .mfv import MFV, GEOMETRIES, angle_between, normalize_angle

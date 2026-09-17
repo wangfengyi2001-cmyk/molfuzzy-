@@ -18,7 +18,7 @@ This module implements:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from math import acos, cos, pi, sqrt
 from typing import Iterable, List, Sequence, Tuple
 
@@ -59,7 +59,11 @@ class MFV:
     m: float
     n: float
     h: float
-    tol: float = 1e-6
+    # Validation slack, not part of the value: a different tolerance must
+    # not make two otherwise identical MFVs unequal or hash differently.
+    # NOTE: the sum-to-one check below deliberately keeps its own looser
+    # threshold so existing inputs keep validating exactly as before.
+    tol: float = field(default=1e-6, repr=False, compare=False)
 
     def __post_init__(self):
         total = self.m + self.n + self.h

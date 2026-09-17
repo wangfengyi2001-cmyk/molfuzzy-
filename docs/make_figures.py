@@ -197,7 +197,10 @@ def fig_sensitivity():
         CRITERIA, ALTERNATIVES, CRITERIA_MATRICES, DECISION_MATRICES
     )
 
-    scenario_labels = [f"{r.geometry}\nα={r.learning_rate}" for r in rows]
+    # Use lambda for the Q-learning rate: alpha is already taken by the ACO
+    # pheromone exponent in the same paper/pipeline, so overloading it here
+    # invites misreading the axis.
+    scenario_labels = [f"{r.geometry}\nλ={r.learning_rate}" for r in rows]
     weights_by_criterion = {c: [] for c in CRITERIA}
     for r in rows:
         for c, w in zip(CRITERIA, r.weights):

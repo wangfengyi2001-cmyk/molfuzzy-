@@ -35,10 +35,13 @@ def run_sensitivity_analysis(
     """Re-run the full pipeline for every (learning_rate, geometry) pair
     and collect the resulting criterion weights and their rank order.
 
-    Returns one :class:`SensitivityRow` per scenario; the caller can
-    check whether ``ranking_order`` is stable across all scenarios (as
-    the reference case study finds) or use the ``weights`` arrays to
-    plot a sensitivity chart such as the reference Fig. 4.
+    Returns one :class:`SensitivityRow` per scenario.
+
+    Note that ``ranking_order`` is the rank order of the *criterion
+    weights* (Stage 3), not of the alternatives; whether it is stable is
+    an empirical outcome to be checked with :func:`rankings_are_stable`,
+    not a guarantee. The ``weights`` arrays can also be used to plot a
+    sensitivity chart such as the reference Fig. 4.
     """
     rows: List[SensitivityRow] = []
     for lr in learning_rates:

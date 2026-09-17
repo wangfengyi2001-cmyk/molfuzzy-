@@ -75,7 +75,11 @@ def _cmd_sensitivity(args: argparse.Namespace) -> int:
             f"order={' > '.join(row.ranking_order)}"
         )
     stable = rankings_are_stable(rows)
-    print(f"\nRanking stable across all scenarios: {stable}")
+    # NOTE: this compares the *criterion-weight* rank order of Stage 3 only.
+    # It says nothing about the Stage 4 alternative ranking, which is not
+    # swept here (the ACO stage is stochastic; use a fixed --seed for
+    # reproducible comparisons).
+    print(f"\nCriterion-weight order stable across all scenarios: {stable}")
     return 0
 
 

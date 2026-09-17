@@ -10,7 +10,14 @@ point) then builds full visiting sequences using the standard
 pheromone/heuristic transition rule (Eq. 26), scores each sequence by
 its path fitness (Eq. 27) and updates pheromone trails (Eq. 28) until
 the best sequence stops changing between iterations. The best-fitness
-sequence in the final iteration is returned as the alternative ranking.
+sequence *across all iterations* is returned as the alternative ranking.
+
+.. note::
+   The returned ordering is the best ant *visiting sequence*, which is
+   not in general a preference ordering: path fitness reflects pairwise
+   angular relations between alternatives, not unilateral quality, so a
+   dominated alternative can appear early in the sequence. See the
+   "Implementation notes" section of README.md.
 """
 from __future__ import annotations
 
