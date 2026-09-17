@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/tests-pytest-green)](tests/)
+[![CI](https://github.com/wangfengyi2001-cmyk/molfuzzy-/actions/workflows/ci.yml/badge.svg)](https://github.com/wangfengyi2001-cmyk/molfuzzy-/actions/workflows/ci.yml)
 
 MolFuzzy provides a reusable, four-stage pipeline for group multi-criteria
 decision making (MCDM) under Molecular Fuzzy Set (MFS) uncertainty:
